@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35913.81 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognitiva.AI.Simpler", "Cognitiva.AI.Simpler\Cognitiva.AI.Simpler.csproj", "{53543BEA-64A7-4C1A-AF18-1D3DDACD317E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognitiva.AI.Simpler.WinClient", "Cognitiva.AI.Simpler.WinClient\Cognitiva.AI.Simpler.WinClient.csproj", "{FF179031-7370-445D-B20C-74C33E94DA41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{53543BEA-64A7-4C1A-AF18-1D3DDACD317E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53543BEA-64A7-4C1A-AF18-1D3DDACD317E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53543BEA-64A7-4C1A-AF18-1D3DDACD317E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF179031-7370-445D-B20C-74C33E94DA41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF179031-7370-445D-B20C-74C33E94DA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF179031-7370-445D-B20C-74C33E94DA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF179031-7370-445D-B20C-74C33E94DA41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
