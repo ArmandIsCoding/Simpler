@@ -34,15 +34,18 @@
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel1 = new Panel();
             webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            panel2 = new Panel();
+            panel3 = new Panel();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)webView22).BeginInit();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // button1
             // 
             button1.Dock = DockStyle.Right;
-            button1.Location = new Point(805, 0);
+            button1.Location = new Point(1182, 0);
             button1.Name = "button1";
             button1.Size = new Size(75, 24);
             button1.TabIndex = 0;
@@ -55,7 +58,7 @@
             textBox1.Dock = DockStyle.Fill;
             textBox1.Location = new Point(0, 0);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(805, 23);
+            textBox1.Size = new Size(1182, 23);
             textBox1.TabIndex = 1;
             textBox1.Text = "http://www.infobae.com/";
             // 
@@ -63,7 +66,7 @@
             // 
             statusStrip1.Location = new Point(0, 537);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(880, 22);
+            statusStrip1.Size = new Size(1257, 22);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -86,7 +89,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(880, 24);
+            panel1.Size = new Size(1257, 24);
             panel1.TabIndex = 4;
             // 
             // webView22
@@ -95,18 +98,36 @@
             webView22.CreationProperties = null;
             webView22.DefaultBackgroundColor = Color.White;
             webView22.Dock = DockStyle.Fill;
-            webView22.Location = new Point(380, 24);
+            webView22.Location = new Point(0, 0);
             webView22.Name = "webView22";
-            webView22.Size = new Size(500, 513);
+            webView22.Size = new Size(526, 513);
             webView22.TabIndex = 5;
             webView22.ZoomFactor = 1D;
+            // 
+            // panel2
+            // 
+            panel2.Dock = DockStyle.Right;
+            panel2.Location = new Point(906, 24);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(351, 513);
+            panel2.TabIndex = 6;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(webView22);
+            panel3.Dock = DockStyle.Fill;
+            panel3.Location = new Point(380, 24);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(526, 513);
+            panel3.TabIndex = 7;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(880, 559);
-            Controls.Add(webView22);
+            ClientSize = new Size(1257, 559);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
             Controls.Add(webView21);
             Controls.Add(panel1);
             Controls.Add(statusStrip1);
@@ -117,6 +138,7 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)webView22).EndInit();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -132,5 +154,7 @@
         private Panel panel1;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView22;
+        private Panel panel2;
+        private Panel panel3;
     }
 }

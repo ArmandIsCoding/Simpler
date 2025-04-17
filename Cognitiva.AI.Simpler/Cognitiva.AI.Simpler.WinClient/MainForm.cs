@@ -1,25 +1,24 @@
+using Cognitiva.AI.Simpler.Dto;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using OllamaClient;
-using Microsoft.Extensions.DependencyInjection;
-using OllamaClient.Extensions;
 
 namespace Cognitiva.AI.Simpler.WinClient
 {
     public partial class MainForm : Form
     {
-        private readonly OllamaHttpClient _ollamaService;
+        AICore core = new AICore();
 
         public MainForm()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
             this.webView21.Source = new Uri(this.textBox1.Text);
+            await webView22.EnsureCoreWebView2Async();
         }
 
         private void webView21_Click(object sender, EventArgs e)
@@ -27,50 +26,69 @@ namespace Cognitiva.AI.Simpler.WinClient
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            this.webView21.Source = new Uri(this.textBox1.Text);
+            await webView22.EnsureCoreWebView2Async();
+            webView22.NavigateToString("<h1>Cargando resumen...</h1>");
 
-            var serviceProvider = new ServiceCollection()
-                  .AddOllamaClient()
-                  .BuildServiceProvider();
+            // Obtenemos el contenido de texto plano y los links
+            var script = """
+                JSON.stringify({
+                    text: document.body.innerText,
+                    links: Array.from(document.querySelectorAll("a"))
+                        .map(a => ({ text: a.textContent.trim(), href: a.href }))
+                })
+            """;
 
-            var client = serviceProvider.GetRequiredService<IOllamaHttpClient>();
+            var rawJson = await webView21.ExecuteScriptAsync(script);
+            var jsonLimpio = System.Text.Json.JsonSerializer.Deserialize<string>(rawJson);
+            var datos = System.Text.Json.JsonSerializer.Deserialize<PaginaExtraida>(jsonLimpio);
 
-            var pullResult = client.Pull(new OllamaClient.Models.PullRequest()
+
+            // Limpiar panel2 antes de agregar los nuevos botones
+            panel2.Controls.Clear();
+
+            foreach (var link in datos.links.Take(10))
             {
-                Name = "phi3",
-            }, CancellationToken.None);
+                // Crear un botón para cada link
+                Button linkButton = new Button
+                {
+                    Text = string.IsNullOrWhiteSpace(link.text) ? link.href : link.text,  // Texto del botón es el 'text' del link
+                    Width = panel2.Width - 20,  // Ajustar el ancho al tamaño del panel
+                    Height = 30,  // Altura estándar para el botón
+                    Tag = link.href  // Almacenar el 'href' en el Tag del botón
+                    ,
+                    Dock = DockStyle.Top
+                };
 
-            Console.WriteLine(pullResult.Status);
+                // Agregar el evento Click al botón
+                linkButton.Click += (sender, e) =>
+                {
+                    // Obtener el 'href' del botón (almacenado en Tag)
+                    string url = linkButton.Tag.ToString();
 
-            var models = (client.GetModels(CancellationToken.None)).Result;
+                    // Navegar al link en webView22
+                    webView21.NavigateToString(url);
+                };
 
-            foreach (var model in models.Models)
-            {
-                Console.WriteLine(model.Name);
+                // Agregar el botón al panel
+                panel2.Controls.Add(linkButton);
             }
 
-            var result = client.SendChat(new OllamaClient.Models.ChatStreamRequest()
-            {
-                Model = models.Models[0].Name,
-                Messages = new List<OllamaClient.Models.Message>() { new OllamaClient.Models.Message() {
-                        Content = "Hello, how are you?",
-                        Role = "user"
-                    }
-                }
-            }, CancellationToken.None);
 
-            foreach (var message in result)
-            {
-                if (message.Message is null) continue;
+            // Ejecutamos el resumen con los links
+            var resultadoHtml = await core.Extract(datos.text, datos.links);
 
-                Console.Write(message.Message.Content);
-            }
+            webView22.NavigateToString(resultadoHtml);
         }
+
+
 
         private async void button2_Click(object sender, EventArgs e)
         {
         }
     }
+
+
+
 }

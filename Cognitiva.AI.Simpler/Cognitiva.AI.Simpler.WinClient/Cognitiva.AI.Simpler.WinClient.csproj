@@ -10,7 +10,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3179.45" />
-    <PackageReference Include="OllamaClient" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cognitiva.AI.Simpler\Cognitiva.AI.Simpler.csproj" />
   </ItemGroup>
 
 </Project>
